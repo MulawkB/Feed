@@ -13,10 +13,26 @@ import { AddPost } from './src/surfaces/AddPost';
 import { Favorites } from './src/surfaces/Favorites';
 import { Profile } from './src/surfaces/Profile';
 
+import AppLoading from "expo-app-loading";
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_400Bold
+} from "@expo-google-fonts/poppins";
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Home() {
+  let [fontsLoaded] = useFonts ({
+    Poppins_400Regular,
+    Poppins_400Bold
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -35,6 +51,15 @@ function Home() {
         },
         tabBarActiveTintColor: "#25A0B0",
         tabBarInactiveTintColor: "#000000",
+        headerTransparent: true,
+        headerTitleAlign: "right",
+        headerTitleStyle: {
+          paddingTop: 140,
+          paddingBottom: 40,
+          textAlign: "left",
+          fontWeight: "bold",
+        },
+
       })}
     >
       <Tab.Screen name="Feed" component={Feed} />
