@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import * as SplashScreen from 'expo-splash-screen';
+// import * as SplashScreen from 'expo-splash-screen';
 
 import Login from './src/surfaces/Login';
 import { Feed } from './src/surfaces/Feed';
@@ -15,13 +15,13 @@ import { AddPost } from './src/surfaces/AddPost';
 import { Favorites } from './src/surfaces/Favorites';
 import { Profile } from './src/surfaces/Profile';
 
-import {
-  useFonts,
-  Poppins_400Regular,
-  Poppins_400Bold,
-} from '@expo-google-fonts/poppins';
+// import {
+//   useFonts,
+//   Poppins_400Regular,
+//   Poppins_400Bold,
+// } from '@expo-google-fonts/poppins';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,31 +65,32 @@ function Home() {
 }
 
 export default function App() {
-  const [userLoggedIn, setIsUserLoggedIn] = useState(true);
-  const [fontsLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_400Bold,
-  });
+  // const [fontsLoaded] = useFonts({
+  //   Poppins_400Regular,
+  //   Poppins_400Bold,
+  // });
 
+  // useEffect(() => {
+  //   if (fontsLoaded) {
+  //     SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
+
+  // if (!fontsLoaded) return null;
 
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          {!userLoggedIn ? (
-            <Stack.Screen name="Login" component={Login} />
-          ) : (
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{ headerShown: false }}
-            />
-          )}
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );
-
 }
 
 
