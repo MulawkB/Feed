@@ -1,10 +1,12 @@
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import * as SplashScreen from 'expo-splash-screen';
 
 import Login from './src/surfaces/Login';
 import { Feed } from './src/surfaces/Feed';
@@ -13,53 +15,44 @@ import { AddPost } from './src/surfaces/AddPost';
 import { Favorites } from './src/surfaces/Favorites';
 import { Profile } from './src/surfaces/Profile';
 
-import AppLoading from "expo-app-loading";
 import {
   useFonts,
   Poppins_400Regular,
-  Poppins_400Bold
-} from "@expo-google-fonts/poppins";
+  Poppins_400Bold,
+} from '@expo-google-fonts/poppins';
+
+SplashScreen.preventAutoHideAsync();
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Home() {
-  let [fontsLoaded] = useFonts ({
-    Poppins_400Regular,
-    Poppins_400Bold
-  });
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === "Feed") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Conversations") {
-            iconName = focused ? "chatbox" : "chatbox-outline";
-          } else if (route.name === "Favorites") {
-            iconName = focused ? "heart" : "heart-outline";
-          } else if (route.name === "Profile") {
-            iconName = focused ? "person-circle" : "person-circle-outline";
+          if (route.name === 'Feed') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Conversations') {
+            iconName = focused ? 'chatbox' : 'chatbox-outline';
+          } else if (route.name === 'Favorites') {
+            iconName = focused ? 'heart' : 'heart-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person-circle' : 'person-circle-outline';
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#25A0B0",
-        tabBarInactiveTintColor: "#000000",
+        tabBarActiveTintColor: '#25A0B0',
+        tabBarInactiveTintColor: '#000000',
         headerTransparent: true,
-        headerTitleAlign: "right",
+        headerTitleAlign: 'right',
         headerTitleStyle: {
           paddingTop: 140,
           paddingBottom: 40,
-          textAlign: "left",
-          fontWeight: "bold",
+          textAlign: 'left',
+          fontWeight: 'bold',
         },
-
       })}
     >
       <Tab.Screen name="Feed" component={Feed} />
@@ -73,6 +66,11 @@ function Home() {
 
 export default function App() {
   const [userLoggedIn, setIsUserLoggedIn] = useState(true);
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_400Bold,
+  });
+
 
   return (
     <SafeAreaProvider>
@@ -91,4 +89,7 @@ export default function App() {
       </NavigationContainer>
     </SafeAreaProvider>
   );
+
 }
+
+
